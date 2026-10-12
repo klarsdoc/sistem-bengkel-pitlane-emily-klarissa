@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0c10">
+  <title>PITLANE Garage — Workshop OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Pitlane Garage home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span><b>PITLANE</b><small>GARAGE / WORKSHOP OS</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">▦</span> Dashboard</button>
+        <button class="nav-item" data-view="customers"><span class="nav-icon">♙</span> Customers</button>
+        <button class="nav-item" data-view="vehicles"><span class="nav-icon">▰</span> Vehicles</button>
+        <button class="nav-item" data-view="jobs"><span class="nav-icon">◈</span> Work orders <span class="nav-count" id="nav-job-count">0</span></button>
+        <button class="nav-item" data-view="inventory"><span class="nav-icon">▤</span> Inventory</button>
+        <button class="nav-item" data-view="receivables"><span class="nav-icon">＄</span> Invoices & AR</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="garage-card">
+          <div class="garage-orbit">PL<span>01</span></div>
+          <div><b>Garage status</b><small><i class="status-dot"></i> System online</small></div>
+        </div>
+        <div class="side-foot">BUILT FOR THE NEXT GEAR<br><span>© PITLANE GARAGE</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark"><span></span><span></span><span></span></span><b>PITLANE</b></div>
+        <div class="crumb"><span>WORKSHOP</span><b>/</b><strong id="crumb-current">OVERVIEW</strong></div>
+        <div class="top-actions">
+          <span class="live-pill"><i class="status-dot"></i> LIVE SYSTEM</span>
+          <button class="icon-btn" id="refresh-btn" title="Refresh data" aria-label="Refresh data">↻</button>
+          <div class="avatar">PL</div>
+        </div>
+      </header>
+      <nav class="mobile-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="dashboard">▦ Dashboard</button>
+        <button class="nav-item" data-view="customers">♙ Customers</button>
+        <button class="nav-item" data-view="vehicles">▰ Vehicles</button>
+        <button class="nav-item" data-view="jobs">◈ Work orders</button>
+        <button class="nav-item" data-view="inventory">▤ Inventory</button>
+        <button class="nav-item" data-view="receivables">＄ Invoices</button>
+      </nav>
+
+      <section class="view active" id="view-dashboard">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span></span> PERFORMANCE / PRECISION / CONTROL</div>
+            <h1>YOUR GARAGE.<br><em>IN POLE POSITION.</em></h1>
+            <p>One workspace to manage every job, every part, every number.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="hero-new-job"><span>＋</span> NEW WORK ORDER</button>
+            </div>
+          </div>
+          <div class="hero-art" role="img" aria-label="Decorative abstract racing-inspired garage graphic">
+            <div class="art-glow"></div><div class="speed-lines"></div>
+            <div class="wheel wheel-back"></div><div class="wheel wheel-front"></div>
+            <div class="bike-frame"><div class="bike-seat"></div><div class="bike-tank"></div><div class="bike-fairing"></div><div class="bike-fork"></div><div class="bike-tail"></div></div>
+            <div class="art-label">ENGINEERED<br>TO MOVE.</div>
+            <div class="art-index">PL / 001</div>
+          </div>
+          <div class="hero-stripe"></div>
+        </div>
+
+        <div class="section-heading">
+          <div><div class="eyebrow muted">LIVE SNAPSHOT</div><h2>WORKSHOP OVERVIEW</h2></div>
+          <span class="date-chip" id="today-label">TODAY / —</span>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>TOTAL WORK ORDERS</span><span class="stat-symbol">◈</span></div><div class="stat-value" id="stat-jobs">—</div><div class="stat-foot">All recorded jobs <span class="accent-text">↗</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>ACTIVE JOBS</span><span class="stat-symbol">◉</span></div><div class="stat-value" id="stat-active">—</div><div class="stat-foot"><span class="status-dot"></span> In workshop pipeline</div></article>
+          <article class="stat-card"><div class="stat-top"><span>LOW STOCK ALERTS</span><span class="stat-symbol">▤</span></div><div class="stat-value" id="stat-stock">—</div><div class="stat-foot">At or below minimum level</div></article>
+          <article class="stat-card stat-revenue"><div class="stat-top"><span>RECORDED REVENUE</span><span class="stat-symbol">↗</span></div><div class="stat-value currency" id="stat-revenue">—</div><div class="stat-foot">Total billed work orders</div></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel recent-panel">
+            <div class="panel-head"><div><div class="eyebrow muted">LATEST ACTIVITY</div><h3>RECENT WORK ORDERS</h3></div><button class="text-btn" data-goto="jobs">VIEW ALL ↗</button></div>
+            <div class="table-wrap"><table><thead><tr><th>JOB ID</th><th>CUSTOMER / VEHICLE</th><th>STATUS</th><th>AMOUNT</th></tr></thead><tbody id="recent-jobs"><tr><td colspan="4" class="empty-cell">Loading workshop data…</td></tr></tbody></table></div>
+          </section>
+          <section class="panel stock-panel">
+            <div class="panel-head"><div><div class="eyebrow muted">PARTS CONTROL</div><h3>STOCK WATCH</h3></div><button class="text-btn" data-goto="inventory">INVENTORY ↗</button></div>
+            <div id="stock-watch" class="stock-list"><div class="empty-state">Loading inventory…</div></div>
+          </section>
+        </div>
+        <div class="bottom-note"><span class="note-icon">✳</span><span><b>Precision in every detail.</b> Work orders, stock movement and job costing connected in one place.</span><span class="note-tag">PITLANE / SYSTEMS</span></div>
+      </section>
+
+      <section class="view" id="view-jobs">
+        <div class="page-heading"><div><div class="eyebrow"><span></span> JOB MANAGEMENT</div><h1>WORK <em>ORDERS.</em></h1><p>Track each vehicle from check-in to handover. Every job gets its own cost sheet.</p></div><button class="btn btn-primary" id="new-job-btn">＋ CREATE WORK ORDER</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="job-search" placeholder="Search job, plate, customer…" aria-label="Search work orders"></div><select id="job-filter" aria-label="Filter status"><option value="">All statuses</option><option>Masuk</option><option>Dikerjakan</option><option>Menunggu Part</option><option>Selesai</option><option>Diambil</option></select></div>
+        <section class="panel"><div class="table-wrap"><table class="wide-table"><thead><tr><th>WORK ORDER</th><th>CUSTOMER / VEHICLE</th><th>MECHANIC</th><th>JOB COST</th><th>BILLING</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="jobs-table"><tr><td colspan="7" class="empty-cell">Loading…</td></tr></tbody></table></div></section>
+      </section>
+
+      <section class="view" id="view-customers">
+        <div class="page-heading"><div><div class="eyebrow"><span></span> MASTER DATA</div><h1>CUSTOMER <em>BOOK.</em></h1><p>Maintain customer records separately before creating work orders.</p></div><button class="btn btn-primary" id="new-customer-btn">＋ ADD CUSTOMER</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="customer-search" placeholder="Search name, phone, email…" aria-label="Search customers"></div></div>
+        <section class="panel"><div class="table-wrap"><table class="wide-table"><thead><tr><th>CUSTOMER</th><th>PHONE</th><th>EMAIL</th><th>ADDRESS</th><th>ACTION</th></tr></thead><tbody id="customers-table"><tr><td colspan="5" class="empty-cell">Loading…</td></tr></tbody></table></div></section>
+      </section>
+
+      <section class="view" id="view-vehicles">
+        <div class="page-heading"><div><div class="eyebrow"><span></span> MASTER DATA</div><h1>VEHICLE <em>REGISTER.</em></h1><p>Register vehicle and link it to an existing customer before service.</p></div><button class="btn btn-primary" id="new-vehicle-btn">＋ ADD VEHICLE</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="vehicle-search" placeholder="Search plate, make, model, owner…" aria-label="Search vehicles"></div></div>
+        <section class="panel"><div class="table-wrap"><table class="wide-table"><thead><tr><th>PLATE</th><th>VEHICLE</th><th>TYPE / YEAR</th><th>OWNER</th><th>PHONE</th><th>ACTION</th></tr></thead><tbody id="vehicles-table"><tr><td colspan="6" class="empty-cell">Loading…</td></tr></tbody></table></div></section>
+      </section>
+
+      <section class="view" id="view-receivables">
+        <div class="page-heading"><div><div class="eyebrow"><span></span> BILLING & COLLECTION</div><h1>INVOICES <em>& AR.</em></h1><p>Every work order has its own invoice. Record payments and print/download an invoice copy.</p></div></div>
+        <div class="inventory-metrics" id="ar-metrics"></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="invoice-search" placeholder="Search invoice, job number, customer, plate…" aria-label="Search invoices"></div><select id="invoice-filter" aria-label="Filter invoice status"><option value="">All payment statuses</option><option>Belum Dibayar</option><option>Dibayar Sebagian</option><option>Lunas</option></select></div>
+        <section class="panel"><div class="table-wrap"><table class="wide-table"><thead><tr><th>INVOICE / WORK ORDER</th><th>CUSTOMER / VEHICLE</th><th>ISSUED / DUE</th><th>TOTAL</th><th>PAID</th><th>OUTSTANDING</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="invoices-table"><tr><td colspan="8" class="empty-cell">Loading…</td></tr></tbody></table></div></section>
+      </section>
+
+      <section class="view" id="view-inventory">
+        <div class="page-heading"><div><div class="eyebrow"><span></span> INVENTORY CONTROL</div><h1>PARTS <em>& STOCK.</em></h1><p>Keep critical components in check. Stock used on a job is tracked against its work order.</p></div></div>
+        <div class="inventory-metrics" id="inventory-metrics"></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="part-search" placeholder="Search SKU or part name…" aria-label="Search inventory"></div><button class="btn btn-primary" id="new-part-btn">＋ ADD PART</button></div>
+        <div id="parts-cards" class="parts-cards"><div class="panel empty-cell">Loading inventory…</div></div>
+      </section>
+
+      <footer class="main-footer"><span><b>PITLANE</b> WORKSHOP OS <span class="footer-dot">●</span> BUILT FOR PRECISION</span><span>JOB COSTING / INVENTORY / ACCOUNTING</span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <dialog id="job-dialog" class="modal">
+    <form id="job-form" method="dialog">
+      <div class="modal-head"><div><div class="eyebrow"><span></span> WORK ORDER SETUP</div><h2 id="job-modal-title">CREATE <em>NEW JOB.</em></h2></div><button type="button" class="close-btn" data-close="job-dialog">×</button></div>
+      <input type="hidden" id="job-id">
+      <div class="form-grid">
+        <label>Registered customer<select id="job-customer-select" required><option value="">Select customer…</option></select><small class="muted-copy">Belum terdaftar? Tambahkan di menu Customers terlebih dahulu.</small></label>
+        <label>Registered vehicle<select id="job-vehicle-select" required><option value="">Select vehicle…</option></select><small class="muted-copy">Kendaraan harus terhubung ke pelanggan yang dipilih.</small></label>
+        <label class="full">Customer complaint<input id="job-complaint" required placeholder="Describe the issue or requested service"></label>
+        <label>Mechanic<input id="job-mechanic" placeholder="Mechanic in charge"></label>
+        <label>Status<select id="job-status"><option>Masuk</option><option>Dikerjakan</option><option>Menunggu Part</option><option>Selesai</option><option>Diambil</option></select></label>
+        <label class="full">Diagnosis / work performed<textarea id="job-diagnosis" rows="2" placeholder="Inspection result and repair details"></textarea></label>
+      </div>
+      <div class="form-section-title">PARTS USED <span>INVENTORY DEDUCTION</span></div>
+      <div class="parts-entry"><select id="job-part"><option value="">Select a part…</option></select><input id="job-part-qty" type="number" min="1" value="1" aria-label="Part quantity"><button type="button" class="btn btn-ghost" id="add-job-part">＋ ADD</button></div>
+      <div id="selected-parts" class="selected-parts"><span class="muted-copy">No parts added to this job.</span></div>
+      <div class="form-grid cost-grid">
+        <label>Labor hours<input id="labor-hours" type="number" min="0" step="0.25" value="1"></label>
+        <label>Labor cost / hour (Rp)<input id="labor-rate" type="number" min="0" step="1000" value="35000"></label>
+        <label>Allocated overhead (Rp)<input id="job-overhead" type="number" min="0" step="1000" value="15000"></label>
+        <label>Service charge (Rp)<input id="service-charge" type="number" min="0" step="1000" value="75000"></label>
+      </div>
+      <div class="cost-preview"><div><span>EST. JOB COST</span><b id="preview-cost">Rp0</b></div><div><span>TOTAL BILLING</span><b id="preview-revenue">Rp0</b></div><div><span>GROSS PROFIT</span><b id="preview-profit">Rp0</b></div></div>
+      <div class="modal-actions"><button type="button" class="btn btn-ghost" data-close="job-dialog">CANCEL</button><button type="submit" class="btn btn-primary" id="save-job-btn">SAVE WORK ORDER ↗</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="customer-dialog" class="modal modal-small">
+    <form id="customer-form" method="dialog"><div class="modal-head"><div><div class="eyebrow"><span></span> CUSTOMER MASTER</div><h2 id="customer-modal-title">ADD <em>CUSTOMER.</em></h2></div><button type="button" class="close-btn" data-close="customer-dialog">×</button></div><input type="hidden" id="customer-id"><div class="form-grid"><label class="full">Full name<input id="customer-name-input" required></label><label>Phone<input id="customer-phone-input"></label><label>Email<input id="customer-email-input" type="email"></label><label class="full">Address<textarea id="customer-address-input" rows="2"></textarea></label></div><div class="modal-actions"><button type="button" class="btn btn-ghost" data-close="customer-dialog">CANCEL</button><button type="submit" class="btn btn-primary" id="save-customer-btn">SAVE CUSTOMER ↗</button></div></form>
+  </dialog>
+  <dialog id="vehicle-dialog" class="modal modal-small">
+    <form id="vehicle-form" method="dialog"><div class="modal-head"><div><div class="eyebrow"><span></span> VEHICLE MASTER</div><h2 id="vehicle-modal-title">ADD <em>VEHICLE.</em></h2></div><button type="button" class="close-btn" data-close="vehicle-dialog">×</button></div><input type="hidden" id="vehicle-id"><div class="form-grid"><label class="full">Owner / customer<select id="vehicle-customer-select" required><option value="">Select customer…</option></select></label><label>Plate number<input id="vehicle-plate-input" required placeholder="H 1234 ABC"></label><label>Type<select id="vehicle-type-input"><option>Motor</option><option>Mobil</option></select></label><label>Make / brand<input id="vehicle-make-input" required placeholder="Honda"></label><label>Model<input id="vehicle-model-input" required placeholder="Vario 160"></label><label>Year<input id="vehicle-year-input" type="number" min="1900" max="2100"></label></div><div class="modal-actions"><button type="button" class="btn btn-ghost" data-close="vehicle-dialog">CANCEL</button><button type="submit" class="btn btn-primary" id="save-vehicle-btn">SAVE VEHICLE ↗</button></div></form>
+  </dialog>
+  <dialog id="payment-dialog" class="modal modal-small">
+    <form id="payment-form"><div class="modal-head"><div><div class="eyebrow"><span></span> ACCOUNTS RECEIVABLE</div><h2>RECORD <em>PAYMENT.</em></h2><p id="payment-invoice-label" class="muted-copy"></p></div><button type="button" class="close-btn" data-close="payment-dialog">×</button></div><input type="hidden" id="payment-invoice-id"><div class="form-grid"><label>Payment date<input id="payment-date" type="date" required></label><label>Payment method<select id="payment-method"><option>Tunai</option><option>Transfer Bank</option><option>QRIS</option><option>Kartu Debit/Kredit</option><option>Lainnya</option></select></label><label class="full">Amount paid (Rp)<input id="payment-amount" type="number" min="1" step="1" required></label><label class="full">Notes<textarea id="payment-notes" rows="2"></textarea></label></div><div class="modal-actions"><button type="button" class="btn btn-ghost" data-close="payment-dialog">CANCEL</button><button type="submit" class="btn btn-primary">SAVE PAYMENT ↗</button></div></form>
+  </dialog>
+
+  <dialog id="part-dialog" class="modal modal-small">
+    <form id="part-form" method="dialog">
+      <div class="modal-head"><div><div class="eyebrow"><span></span> INVENTORY SETUP</div><h2 id="part-modal-title">ADD <em>NEW PART.</em></h2></div><button type="button" class="close-btn" data-close="part-dialog">×</button></div>
+      <div class="form-grid">
+        <label>SKU / Part code<input id="part-sku" required placeholder="OIL-10W40"></label>
+        <label>Part name<input id="part-name" required placeholder="Engine oil 10W-40"></label>
+        <label>Category<input id="part-category" placeholder="Lubricant"></label>
+        <label>Opening stock<input id="part-stock" type="number" min="0" value="0" required></label>
+        <label>Minimum stock<input id="part-min" type="number" min="0" value="3" required></label>
+        <label>Unit cost (Rp)<input id="part-cost" type="number" min="0" value="0" required></label>
+        <label class="full">Selling price (Rp)<input id="part-price" type="number" min="0" value="0" required></label>
+      </div>
+      <div class="modal-actions"><button type="button" class="btn btn-ghost" data-close="part-dialog">CANCEL</button><button type="submit" class="btn btn-primary" id="save-part-btn">SAVE PART ↗</button></div>
+    </form>
+  </dialog>
+
+
+  <dialog id="movement-dialog" class="modal modal-small">
+    <form id="movement-form">
+      <div class="modal-head"><div><div class="eyebrow"><span></span> STOCK MOVEMENT</div><h2 id="movement-title">RECORD <em>TRANSACTION.</em></h2><p id="movement-part-label" class="muted-copy"></p></div><button type="button" class="close-btn" data-close="movement-dialog">×</button></div>
+      <input type="hidden" id="movement-part-id">
+      <label class="movement-label">Transaction type<select id="movement-type" required><option value="purchase">Pembelian / Barang masuk</option><option value="sale">Penjualan / Barang keluar</option><option value="adjustment">Penyesuaian stok</option></select></label>
+      <div class="form-grid movement-grid">
+        <label id="movement-qty-label">Quantity<input id="movement-qty" type="number" min="1" value="1" required></label>
+        <label>Transaction date<input id="movement-date" type="date" required></label>
+        <label>Unit cost (Rp)<input id="movement-cost" type="number" min="0" value="0" required></label>
+        <label>Unit selling price (Rp)<input id="movement-price" type="number" min="0" value="0" required></label>
+        <label class="full">Reference / invoice number<input id="movement-ref" placeholder="e.g. INV-PUR-0001"></label>
+        <label class="full">Notes<textarea id="movement-notes" rows="2" placeholder="Supplier, customer, or adjustment reason"></textarea></label>
+      </div>
+      <div class="modal-actions"><button type="button" class="btn btn-ghost" data-close="movement-dialog">CANCEL</button><button type="submit" class="btn btn-primary" id="save-movement-btn">SAVE MOVEMENT ↗</button></div>
+    </form>
+  </dialog>
+
+  <script src="frontend.js"></script>
+</body>
+</html>
